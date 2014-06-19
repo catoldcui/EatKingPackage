@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     
     <uses-sdk
         android:minSdkVersion="14"
@@ -40,6 +41,71 @@
             android:name="com.tbond.eatking.view.CreateShopActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name="com.tbond.eatking.view.CorrectActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.ShopInfoChanged"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.ShopStatusChanged"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.ShopDuplicate"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.ShopInfoActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.CDSGActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.PaiHangBangTabActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.KTZActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.UserRegister"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+             >
+        </activity>
         
+        <activity
+            android:name="com.tbond.eatking.view.UserLogin"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+             >
+        </activity>
+        
+        <activity
+            android:name="com.tbond.eatking.view.HomepageTab2"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+             >
+        </activity>
+        <activity
+            android:name="com.tbond.eatking.view.HomepageTab3"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+             >
+        </activity>
+        
+        <activity
+            android:name="com.tbond.eatking.view.HomepageTab4"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+             >
+        </activity>
+     
     </application>
 </manifest>
