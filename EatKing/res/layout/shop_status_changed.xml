@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f8a062"
+    android:paddingTop="10sp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|center"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/status_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="top|center"
+            android:orientation="vertical" >
+			<RadioGroup
+			    android:id="@+id/radioGroup"
+			    android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+			    <RadioButton
+	                android:id="@+id/shop_open"
+	                android:checked="true"
+	                android:text="店铺正在营业"
+	                android:textSize="20sp"/>
+	
+	            <RadioButton
+	                android:id="@+id/shop_stoped"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="店铺暂时关闭" 
+	                android:textSize="20sp"/>
+	            <RadioButton
+	                android:id="@+id/shop_closed"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:text="店铺已停业"
+	                android:textSize="20sp" />
+			</RadioGroup>
+            
+
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:orientation="vertical"
+        android:paddingTop="10dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#ff654321"
+            android:gravity="center"
+            android:text="@string/tag"
+            android:textSize="20sp"
+            android:width="110dp" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/tag_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:ems="50"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:paddingLeft="1sp"
+            android:textSize="20sp"
+            android:textStyle="normal"
+            android:width="250dp" >
+        </EditText>
+    </LinearLayout>
+	
+    <LinearLayout
+   	    android:layout_width="fill_parent"
+   	    android:layout_height="wrap_content"
+   	    android:gravity="top"
+   	    android:orientation="vertical"
+   	    android:paddingBottom="0dp" >
+
+   	    <Button
+   	        android:id="@+id/submit"
+   	        style="android:buttonStyle"
+   	        android:layout_width="fill_parent"
+   	        android:layout_height="48dp"
+   	        android:layout_gravity="center"
+   	        android:background="#ff654321"
+   	        android:gravity="center"
+   	        android:text="@string/submit"
+   	        android:textColor="@drawable/button_drawable"
+   	        android:textSize="20sp" />
+
+   	</LinearLayout>
+</LinearLayout>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/scrollView1"
+     android:layout_width="fill_parent"
+     android:layout_height="match_parent"
+     android:background="#a0ac65" >
+
+<LinearLayout
+    android:id="@+id/linearLayout1"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+     android:orientation="vertical" >
+
+          <RelativeLayout
+              android:id="@+id/RelativeLayout1"
+              android:layout_width="match_parent"
+              android:layout_height="152dp"
+              android:background="#f8a062"
+              android:orientation="horizontal" >
+
+              <RelativeLayout
+                  android:id="@+id/relativeLayout2"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_alignBottom="@+id/shop_image"
+                  android:layout_alignParentLeft="true"
+                  android:layout_toLeftOf="@+id/shop_image"
+                  android:gravity="center_vertical|center_horizontal" >
+
+              </RelativeLayout>
+
+              <TextView
+                  android:id="@+id/mark_num_string"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignTop="@+id/shop_image"
+                  android:layout_toRightOf="@+id/shop_image"
+                  android:text="个性签名："
+                  android:textColor="#eeeeee" />
+
+              <TextView
+                  android:id="@+id/personal_word"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignLeft="@+id/mark_num_string"
+                  android:layout_alignParentBottom="true"
+                  android:layout_alignParentRight="true"
+                  android:layout_below="@+id/mark_num_string"
+                  android:text="        暂无个人签名"
+                  android:textColor="#eeeeee" />
+
+              <TextView
+                  android:id="@+id/username"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_above="@+id/mark_num_string"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentTop="true"
+                  android:gravity="center"
+                  android:text="username"
+                  android:textColor="#eeeeee"
+                  android:textSize="20sp"
+                  android:textStyle="bold" />
+
+              <ImageView
+                  android:id="@+id/shop_image"
+                  android:layout_width="100dip"
+                  android:layout_height="100dip"
+                  android:layout_alignParentBottom="true"
+                  android:layout_alignParentLeft="true"
+                  android:gravity="center"
+                  android:src="@drawable/class1" />
+
+          </RelativeLayout>
+          
+          <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:paddingTop="1dip"  > 
+  
+       <Button
+           android:layout_width="60dip"
+           android:layout_height="60dip"
+           android:layout_gravity="fill"
+           android:background="#26360f"
+           android:text="等级"
+           android:textColor="@drawable/textview_drawable" />
+
+           <Button
+               android:id="@+id/level_view"
+               android:layout_gravity="fill"
+               android:background="#eee"
+               android:gravity="center_vertical|center_horizontal"
+               android:text="等级信息"
+               android:textColor="@drawable/button_drawable" />
+
+        <Button
+            android:layout_gravity="fill_vertical"
+            android:background="#eeeeee"
+            android:gravity="fill"
+            android:text=">"
+            android:textColor="@drawable/button_drawable"
+            android:textSize="20sp" />
+
+    </GridLayout> 
+          
+           <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="2"
+        android:paddingTop="1dip" > 
+  
+        <Button
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="fill"
+            android:layout_rowSpan="2"
+            android:background="#7ca542"
+            android:text="店铺"
+            android:textColor="@drawable/textview_drawable" />
+
+           <Button
+               android:id="@+id/shop_info"
+               android:layout_gravity="fill"
+               android:layout_rowSpan="2"
+               android:background="#eee"
+               android:gravity="center"
+               android:text="店铺信息"
+               android:textColor="@drawable/button_drawable" />
+
+        <Button
+            android:layout_gravity="fill_vertical"
+            android:layout_rowSpan="2"
+            android:background="#eeeeee"
+            android:gravity="fill"
+            android:text=">"
+            android:textColor="@drawable/button_drawable"
+            android:textSize="20sp" />
+
+    </GridLayout>
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="1"
+        android:paddingTop="1dip"  > 
+  
+        <Button
+            android:layout_width="60dip"
+            android:layout_height="60dip"
+            android:layout_gravity="fill"
+            android:background="#26360f"
+            android:text="评论"
+            android:textColor="@drawable/textview_drawable" />
+
+           <Button
+               android:id="@+id/comment"
+               android:layout_gravity="fill"
+				android:background="#eee"
+               android:gravity="center_vertical|center_horizontal"
+               android:text="评论信息"
+               android:textColor="@drawable/button_drawable" />
+
+        <Button
+            android:layout_gravity="fill_vertical"
+            android:background="#eeeeee"
+            android:gravity="fill"
+            android:text=">"
+            android:textColor="@drawable/button_drawable"
+            android:textSize="20sp" />
+
+    </GridLayout> 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:paddingTop="1dip"  > 
+  
+       <Button
+           android:layout_width="60dip"
+           android:layout_height="60dip"
+           android:layout_gravity="fill"
+           android:background="#7ca542"
+           android:text="动态"
+           android:textColor="@drawable/textview_drawable" />
+
+           <Button
+               android:id="@+id/trends_view"
+               android:layout_gravity="fill"
+               android:background="#eee"
+               android:gravity="center_vertical|center_horizontal"
+               android:text="动态信息"
+               android:textColor="@drawable/button_drawable" />
+
+        <Button
+            android:layout_gravity="fill_vertical"
+            android:background="#eeeeee"
+            android:gravity="fill"
+            android:text=">"
+            android:textColor="@drawable/button_drawable"
+            android:textSize="20sp" />
+
+    </GridLayout> 
+         </LinearLayout>
+ </ScrollView>
