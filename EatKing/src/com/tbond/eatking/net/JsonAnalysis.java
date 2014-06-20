@@ -19,11 +19,20 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.tbond.eatking.controller.Controller;
 import com.tbond.eatking.model.*;
 import com.tbond.eatking.view.MainActivity;
+import com.tbond.eatking.view.PersonalHomepage;
+import com.tbond.eatking.view.ShopDuplicate;
+import com.tbond.eatking.view.ShopInfoActivity;
+import com.tbond.eatking.view.ShopInfoChanged;
+import com.tbond.eatking.view.ShopStatusChanged;
+import com.tbond.eatking.view.UserLogin;
+import com.tbond.eatking.view.UserRegister;
 
 public class JsonAnalysis {
 	private static JsonAnalysis instance = new JsonAnalysis();
@@ -63,7 +72,7 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
+				errorMess.setResult("网络错误，请检查您的网络");
 				////((MainActivity) object).setMessage(errorMess);
 			}
 
@@ -76,15 +85,15 @@ public class JsonAnalysis {
 				try {
 					String error = arg1.getString("error");// 获取pet对象的参数
 					if (Integer.valueOf(error) == 1) {
-						if (object instanceof MainActivity) {
+						if (object instanceof UserLogin) {
 							ErrorMessage errorMess = new ErrorMessage();
 							String result = arg1.getString("result");
 							errorMess.setError(error);
 							errorMess.setResult(result);
-							////((MainActivity) object).setMessage(errorMess);
+							((UserLogin) object).setToast(result);
 						}
 					} else {
-						if (object instanceof MainActivity) {
+						if (object instanceof UserLogin) {
 							User user = new User();
 							String userName = arg1.getString("userName");
 							// String userPwd = arg1.getString("userPwd");
@@ -98,7 +107,8 @@ public class JsonAnalysis {
 							user.setUserAvatar(userAvatar);
 							user.setUserIntro(userIntro);
 							// user.setUserId(userId);
-							////((MainActivity) object).setUser(user);
+							Controller.getInstance().setLogin(true);
+							((UserLogin) object).setToast("登陆成功");
 						}
 
 					}
@@ -137,7 +147,8 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
+				errorMess.setResult("网络错误，请检查您的网络");
+				((UserRegister) object).setToast("网络错误，请检查您的网络");
 				////((MainActivity) object).setMessage(errorMess);
 			}
 
@@ -155,17 +166,20 @@ public class JsonAnalysis {
 							errorMess.setError(error);
 							errorMess.setResult(result);
 							////((MainActivity) object).setMessage(errorMess);
+							((UserRegister) object).setToast(result);
 						}
 					} else {
-						if (object instanceof MainActivity) {
-							ErrorMessage errorMess = new ErrorMessage();
-							errorMess.setError(error);
-							errorMess.setResult("注册成功");
-							User user = new User();
+						
+						ErrorMessage errorMess = new ErrorMessage();
+						errorMess.setError(error);
+						errorMess.setResult("注册成功");
+						User user = new User();
 
-							String userId = arg1.getString("userId");
-							user.setUserId(userId);
-							////((MainActivity) object).setMessage2(errorMess,userId);
+						String userId = arg1.getString("userId");
+						user.setUserId(userId);
+						
+						if (object instanceof UserRegister) {
+							((UserRegister) object).setToast("注册成功");
 						}
 
 					}
@@ -199,7 +213,7 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
+				errorMess.setResult("网络错误，请检查您的网络");
 				//((MainActivity) object).setMessage(errorMess);
 
 			}
@@ -252,9 +266,8 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
-				//((MainActivity) object).setMessage(errorMess);
-
+				errorMess.setResult("网络错误，请检查您的网络");
+				((ShopInfoActivity) object).setMessage("网络错误，请检查您的网络");
 			}
 
 			@Override
@@ -265,13 +278,15 @@ public class JsonAnalysis {
 				Log.i("JsonAnalysis login", arg1.toString());
 				try {
 
-					if (object instanceof MainActivity) {
-						ErrorMessage errorMess = new ErrorMessage();
-						String error = arg1.getString("error");// 获取pet对象的参数
-						String result = arg1.getString("result");
-						errorMess.setError(error);
-						errorMess.setResult(result);
-						//((MainActivity) object).setMessage(errorMess);
+					ErrorMessage errorMess = new ErrorMessage();
+					String error = arg1.getString("error");// 获取pet对象的参数
+					String result = arg1.getString("result");
+					errorMess.setError(error);
+					errorMess.setResult(result);
+					if(error.equals("1")){
+						JsonAnalysis.getInstance().cancelCollectionShop(object, "1");
+					} else if (object instanceof ShopInfoActivity) {
+						((ShopInfoActivity) object).setMessage(result);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -306,8 +321,8 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
-						//((MainActivity) object).setMessage(errorMess);
+						errorMess.setResult("网络错误，请检查您的网络");
+						((ShopInfoActivity) object).setMessage("网络错误，请检查您的网络");
 
 					}
 
@@ -319,13 +334,15 @@ public class JsonAnalysis {
 						Log.i("JsonAnalysis login", arg1.toString());
 						try {
 
-							if (object instanceof MainActivity) {
+							
 								ErrorMessage errorMess = new ErrorMessage();
 								String error = arg1.getString("error");// 获取pet对象的参数
 								String result = arg1.getString("result");
 								errorMess.setError(error);
 								errorMess.setResult(result);
-								//((MainActivity) object).setMessage(errorMess);
+								
+							if (object instanceof ShopInfoActivity) {
+								((ShopInfoActivity) object).setMessage(result);
 							}
 						} catch (JSONException e) {
 							// TODO Auto-generated catch block
@@ -374,7 +391,7 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
+				errorMess.setResult("网络错误，请检查您的网络");
 				//((MainActivity) object).setMessage(errorMess);
 
 			}
@@ -447,7 +464,7 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
+				errorMess.setResult("网络错误，请检查您的网络");
 				//((MainActivity) object).setMessage(errorMess);
 
 			}
@@ -527,8 +544,8 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
-				//((MainActivity) object).setMessage(errorMess);
+				errorMess.setResult("网络错误，请检查您的网络");
+				((ShopInfoActivity) object).setMessage("网络错误，请检查您的网络");
 
 			}
 
@@ -539,14 +556,13 @@ public class JsonAnalysis {
 
 				Log.i("JsonAnalysis login", arg1.toString());
 				try {
-
-					if (object instanceof MainActivity) {
-						ErrorMessage errorMess = new ErrorMessage();
-						String error = arg1.getString("error");// 获取pet对象的参数
-						String result = arg1.getString("result");
-						errorMess.setError(error);
-						errorMess.setResult(result);
-						//((MainActivity) object).setMessage(errorMess);
+					ErrorMessage errorMess = new ErrorMessage();
+					String error = arg1.getString("error");// 获取pet对象的参数
+					String result = arg1.getString("result");
+					errorMess.setError(error);
+					errorMess.setResult(result);
+					if (object instanceof ShopInfoActivity) {
+						((ShopInfoActivity) object).setMessage(result);
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -581,7 +597,7 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
+						errorMess.setResult("网络错误，请检查您的网络");
 						//((MainActivity) object).setMessage(errorMess);
 
 					}
@@ -635,7 +651,7 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
+						errorMess.setResult("网络错误，请检查您的网络");
 						//((MainActivity) object).setMessage(errorMess);
 
 					}
@@ -690,7 +706,7 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
+						errorMess.setResult("网络错误，请检查您的网络");
 						//((MainActivity) object).setMessage(errorMess);
 
 					}
@@ -745,7 +761,7 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
+						errorMess.setResult("网络错误，请检查您的网络");
 						//((MainActivity) object).setMessage(errorMess);
 
 					}
@@ -784,7 +800,7 @@ public class JsonAnalysis {
 	 * @param locationX
 	 * @param locationY
 	 * @param phoneNumber
-	 * @param state
+	 * @param state  营业（0）/停业（1）/迁移（2）/重复（3）/错误（4）
 	 * @param businessTime
 	 * @param comment
 	 */
@@ -815,7 +831,7 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
+				errorMess.setResult("网络错误，请检查您的网络");
 				//((MainActivity) object).setMessage(errorMess);
 
 			}
@@ -825,25 +841,19 @@ public class JsonAnalysis {
 				// TODO Auto-generated method stub
 				// super.onSuccess(arg1);
 
-				Log.i("JsonAnalysis login", arg1.toString());
 				try {
 
-					if (object instanceof MainActivity) {
-						ErrorMessage errorMess = new ErrorMessage();
-						String error = arg1.getString("error");// 获取pet对象的参数
-						if (Integer.valueOf(error) == 1) {
-							String result = arg1.getString("result");
-							errorMess.setError(error);
-							errorMess.setResult(result);
-							//((MainActivity) object).setMessage(errorMess);
-						} else {
-							String reportId = arg1.getString("reportId");
-							errorMess.setError(error);
-							errorMess.setResult("成功举报");
-							//((MainActivity) object).setMessage2(errorMess,reportId);
-						}
-
+					if (object instanceof ShopInfoChanged) {
+						String reportId = arg1.getString("reportId");
+						((ShopInfoChanged) object).toastMessage("提交成功");
+					} else if (object instanceof ShopStatusChanged){
+						String reportId = arg1.getString("reportId");
+						((ShopStatusChanged) object).toastMessage("提交成功");
+					} else if (object instanceof ShopDuplicate){
+						String reportId = arg1.getString("reportId");
+						((ShopDuplicate) object).toastMessage("提交成功");
 					}
+					
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -879,7 +889,7 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
+				errorMess.setResult("网络错误，请检查您的网络");
 				//((MainActivity) object).setMessage(errorMess);
 
 			}
@@ -944,7 +954,7 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
+						errorMess.setResult("网络错误，请检查您的网络");
 						//((MainActivity) object).setMessage(errorMess);
 
 					}
@@ -1030,8 +1040,8 @@ public class JsonAnalysis {
 				// super.onFailure(arg0, arg1);
 				ErrorMessage errorMess = new ErrorMessage();
 				errorMess.setError("1");
-				errorMess.setResult("服务器繁忙");
-				//((MainActivity) object).setMessage(errorMess);
+				errorMess.setResult("网络错误，请检查您的网络");
+				((ShopInfoActivity) object).setMessage("网络错误，请检查您的网络");
 
 			}
 
@@ -1042,94 +1052,73 @@ public class JsonAnalysis {
 
 				Log.i("JsonAnalysis login", arg1.toString());
 				try {
+					List<Dish> dishes = new ArrayList<Dish>();
+					JSONArray jsonArr = arg1.getJSONArray("dish");
+					for (int i = 0; i < jsonArr.length(); i++) {
+						JSONObject temp = jsonArr.getJSONObject(i);
+						String dishPrice = temp.getString("dishPrice");
+						String userName = temp.getString("userName");
+						String dishName = temp.getString("dishName");
+						String dishImage = temp.getString("dishImage");
 
-					if (object instanceof MainActivity) {
-						// ErrorMessage errorMess = new ErrorMessage();
-						// String error = arg1.getString("error");// 获取pet对象的参数
-						// if(Integer.valueOf(error) == 1){
-						// String result = arg1.getString("result");
-						// errorMess.setError(error);
-						// errorMess.setResult(result);
-						// //((MainActivity) object).setMessage(errorMess);
-						// }else{
+						Dish dish = new Dish();
+						dish.setDishImage(dishImage);
+						dish.setDishName(dishName);
+						dish.setDishPrice(dishPrice);
+						dishes.add(dish);
+					}
+					String state = arg1.getString("state");
+					String businessTime = arg1.getString("businessTime");
+					String locationX = arg1.getString("locationX");
+					String locationY = arg1.getString("locationY");
+					String phoneNumber = arg1.getString("phoneNumber");
+					String address = arg1.getString("address");
+					String shopName = arg1.getString("shopName");
+					String shopId = arg1.getString("shopId");
+					String userId = arg1.getString("userId");
+					String userName = arg1.getString("userName");
+					String tips = arg1.getString("tips");
+					String isCollected = arg1.getString("isCollected");
+					String environmentGrade = arg1
+							.getString("environmentGrade");
+					String tastGrade = arg1.getString("tastGrade");
+					String serviceGrade = arg1.getString("serviceGrade");
+					Shop shop = new Shop();
+					shop.setAddress(address);
+					shop.setBusinessTime(businessTime);
+					shop.setLocationX(locationX);
+					shop.setLocationY(locationY);
+					shop.setphoneNumber(phoneNumber);
+					shop.setShopId(shopId);
+					shop.setShopName(shopName);
+					shop.setState(state);
+					shop.setTips(tips);
+					shop.setUserId(userId);
+					shop.setIsCollected(isCollected);
+					shop.setEnvironmentGrade(environmentGrade);
+					shop.setTastGrade(tastGrade);
+					shop.setServiceGrade(serviceGrade);
+					UserComment comment = new UserComment();
+					JSONObject temp = arg1.getJSONObject("comment");
 
-						List<Dish> dishes = new ArrayList<Dish>();
-						JSONArray jsonArr = arg1.getJSONArray("dish");
-						for (int i = 0; i < jsonArr.length(); i++) {
-							JSONObject temp = jsonArr.getJSONObject(i);
-							String dishPrice = temp.getString("dishPrice");
-							String userName = temp.getString("userName");
-							String dishName = temp.getString("dishName");
-							String dishImage = temp.getString("dishImage");
-
-							Dish dish = new Dish();
-							dish.setDishImage(dishImage);
-							dish.setDishName(dishName);
-							dish.setDishPrice(dishPrice);
-							dishes.add(dish);
-						}
-						String state = arg1.getString("state");
-						String businessTime = arg1.getString("businessTime");
-						String locationX = arg1.getString("locationX");
-						String locationY = arg1.getString("locationY");
-						String phoneNumber = arg1.getString("phoneNumber");
-						String address = arg1.getString("address");
-						String shopName = arg1.getString("shopName");
-						String shopId = arg1.getString("shopId");
-						String userId = arg1.getString("userId");
-						String userName = arg1.getString("userName");
-						String tips = arg1.getString("tips");
-						String isCollected = arg1.getString("isCollected");
-						Shop shop = new Shop();
-						shop.setAddress(address);
-						shop.setBusinessTime(businessTime);
-						shop.setLocationX(locationX);
-						shop.setLocationY(locationY);
-						shop.setphoneNumber(phoneNumber);
-						shop.setShopId(shopId);
-						shop.setShopName(shopName);
-						shop.setState(state);
-						shop.setTips(tips);
-						shop.setUserId(userId);
-						shop.setIsCollected(isCollected);
-						UserComment comment = new UserComment();
-						JSONObject temp = arg1.getJSONObject("comment");
-						String tastGrade = temp.getString("tastGrade");
-						String time = temp.getString("time");
-						String shopId1 = temp.getString("shopId");
-						String shopEvaluationId = temp
-								.getString("shopEvaluationId");
-						String userId1 = temp.getString("userId");
-						String environmentGrade = temp
-								.getString("environmentGrade");
-						String userName1 = temp.getString("userName");
-						String serviceGrade = temp.getString("serviceGrade");
-						String pricePerPerson = temp
-								.getString("pricePerPerson");
-						String comment1 = temp.getString("comment");
-						String userAvatar = temp.getString("userAvatar");
-						comment.setComment(comment1);
-						comment.setEnvironmentGrade(environmentGrade);
-						comment.setPricePerPerson(pricePerPerson);
-						comment.setServiceGrade(serviceGrade);
-						comment.setShopEvaluationId(shopEvaluationId);
-						comment.setShopId(shopId1);
-						comment.setTastGrade(tastGrade);
-						comment.setTime(time);
-						comment.setUserAvatar(userAvatar);
-						comment.setUserName(userName1);
-						comment.setUserId(userId1);
-						// //((MainActivity) object).setDish(dishes);
-						//((MainActivity) object).setComment(comment);
-						// //((MainActivity) object).setShop(shop);
-						// }
+					String userName1 = temp.getString("userName");
+					String time = temp.getString("time");
+					String comment1 = temp.getString("comment");
+					String userAvatar = temp.getString("userAvatar");
+					comment.setComment(comment1);
+					comment.setUserAvatar(userAvatar);
+					comment.setUserName(userName1);
+					comment.setTime(time);
+					if (object instanceof ShopInfoActivity) {
+						((ShopInfoActivity) object).setDish(dishes);
+						((ShopInfoActivity) object).setComment(comment);
+						((ShopInfoActivity) object).setShop(shop);
 
 					}
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
 			}
 		}.setObject(object));
 	}
@@ -1153,7 +1142,7 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
+						errorMess.setResult("网络错误，请检查您的网络");
 						//((MainActivity) object).setMessage(errorMess);
 
 					}
@@ -1296,7 +1285,7 @@ public class JsonAnalysis {
 								// super.onFailure(arg0, arg1);
 								ErrorMessage errorMess = new ErrorMessage();
 								errorMess.setError("1");
-								errorMess.setResult("服务器繁忙");
+								errorMess.setResult("网络错误，请检查您的网络");
 								//((MainActivity) object).setMessage(errorMess);
 
 							}
@@ -1415,7 +1404,7 @@ public class JsonAnalysis {
 						// super.onFailure(arg0, arg1);
 						ErrorMessage errorMess = new ErrorMessage();
 						errorMess.setError("1");
-						errorMess.setResult("服务器繁忙");
+						errorMess.setResult("网络错误，请检查您的网络");
 						//((MainActivity) object).setMessage(errorMess);
 
 					}
@@ -1493,8 +1482,8 @@ public class JsonAnalysis {
 							// super.onFailure(arg0, arg1);
 							ErrorMessage errorMess = new ErrorMessage();
 							errorMess.setError("1");
-							errorMess.setResult("服务器繁忙");
-							//((MainActivity) object).setMessage(errorMess);
+							errorMess.setResult("网络错误，请检查您的网络");
+							((PersonalHomepage) object).setMessage("网络错误，请检查您的网络");
 
 						}
 
@@ -1504,44 +1493,49 @@ public class JsonAnalysis {
 							// super.onSuccess(arg1);
 							Log.i("JsonAnalysis login", arg1.toString());
 							try {
-
-								if (object instanceof MainActivity) {
-									String userId = arg1.getString("userId");
-									String userName = arg1.getString("userName");
-									String userAvatar = arg1.getString("userAvatar");
-									String userIntro = arg1.getString("userIntro");
-									String mypioneerpoint = arg1.getString("mypioneerpoint");
-									String myChowhoundPoint = arg1.getString("myChowhoundPoint");
-									String myContribute = arg1.getString("myContribute");
-									User user = new User(); 
-									user.setUserId(userId);
-									user.setUserName(userName);
-									user.setUserAvatar(userAvatar);
-									user.setUserIntro(userIntro);
-									user.setMypioneerpoint(mypioneerpoint);
-									user.setMyContribute(myContribute);
-									user.setMyChowhoundPoint(myChowhoundPoint);
-									JSONObject temp = arg1.getJSONObject("shopEvaluation");
+								String userId = arg1.getString("userId");
+								String userName = arg1.getString("userName");
+								String userAvatar = arg1.getString("userAvatar");
+								String userIntro = arg1.getString("userIntro");
+								String mypioneerpoint = arg1.getString("mypioneerpoint");
+								
+								String myChowhoundPoint = arg1.getString("myChowhoundPoint");
+								
+								String contribute = arg1.getString("myContribute");
+//								String shopName1 = temp.getString("shopName");
+//								String time1 = temp.getString("time");
+//								String comment2 = temp.getString("comment");
+								
+								User user = new User(); 
+								user.setUserId(userId);
+								user.setUserName(userName);
+								user.setUserAvatar(userAvatar);
+								user.setUserIntro(userIntro);
+								user.setMypioneerpoint(mypioneerpoint);
+								
+								user.setMyChowhoundPoint(myChowhoundPoint);
+								JSONObject temp = arg1.getJSONObject("shopEvaluation");
 									
-									
-									String tastGrade = temp.getString("tastGrade");
-									String environmentGrade = temp.getString("environmentGrade");
-									String serviceGrade = temp.getString("serviceGrade");
-									String pricePerPerson = temp.getString("pricePerPerson");
-									String time = temp.getString("time");
-									String comment = temp.getString("comment");
-									String shopName = temp.getString("shopName");
-									
-									UserComment comment1 = new UserComment();
-									 comment1.setComment(comment);
-									 comment1.setTastGrade(tastGrade);
-									 comment1.setEnvironmentGrade(environmentGrade);
-									 comment1.setServiceGrade(serviceGrade);
-									 comment1.setPricePerPerson(pricePerPerson);
-									 comment1.setTime(time);
-									 comment1.setShopName(shopName);
-									//((MainActivity) object).setUser(user);
-									
+								String tastGrade = temp.getString("tastGrade");
+								String environmentGrade = temp.getString("environmentGrade");
+								String serviceGrade = temp.getString("serviceGrade");
+								String pricePerPerson = temp.getString("pricePerPerson");
+								String time = temp.getString("time");
+								String comment = temp.getString("comment");
+								String shopName = temp.getString("shopName");
+								
+								UserComment comment1 = new UserComment();
+								 comment1.setComment(comment);
+								 comment1.setTastGrade(tastGrade);
+								 comment1.setEnvironmentGrade(environmentGrade);
+								 comment1.setServiceGrade(serviceGrade);
+								 comment1.setPricePerPerson(pricePerPerson);
+								 comment1.setTime(time);
+								 comment1.setShopName(shopName);
+								 if (object instanceof PersonalHomepage) {
+									 ((PersonalHomepage) object).setUser(user);
+									 ((PersonalHomepage) object).setComment(comment1);
+									 ((PersonalHomepage) object).setContribute(contribute);
 								}
 
 							} catch (JSONException e) {
@@ -1550,7 +1544,7 @@ public class JsonAnalysis {
 							}
 
 						}
-					}.setObject(object));		
+					}.setObject(object));
 			 }
 			 
 				 /**
@@ -1572,7 +1566,7 @@ public class JsonAnalysis {
 								// super.onFailure(arg0, arg1);
 								ErrorMessage errorMess = new ErrorMessage();
 								errorMess.setError("1");
-								errorMess.setResult("服务器繁忙");
+								errorMess.setResult("网络错误，请检查您的网络");
 								//((MainActivity) object).setMessage(errorMess);
 
 							}
@@ -1629,8 +1623,7 @@ public class JsonAnalysis {
 								}
 
 							}
-						}.setObject(object));		
-					 
+						}.setObject(object));
 				 }
 				 /**
 					 * 通过uid查询用户收藏店铺信息，包括离当前位置的距离
@@ -1651,7 +1644,7 @@ public class JsonAnalysis {
 									// super.onFailure(arg0, arg1);
 									ErrorMessage errorMess = new ErrorMessage();
 									errorMess.setError("1");
-									errorMess.setResult("服务器繁忙");
+									errorMess.setResult("网络错误，请检查您的网络");
 									//((MainActivity) object).setMessage(errorMess);
 
 								}
@@ -1717,7 +1710,7 @@ public class JsonAnalysis {
 										// super.onFailure(arg0, arg1);
 										ErrorMessage errorMess = new ErrorMessage();
 										errorMess.setError("1");
-										errorMess.setResult("服务器繁忙");
+										errorMess.setResult("网络错误，请检查您的网络");
 										//((MainActivity) object).setMessage(errorMess);
 
 									}
@@ -1802,7 +1795,7 @@ public class JsonAnalysis {
 											// super.onFailure(arg0, arg1);
 											ErrorMessage errorMess = new ErrorMessage();
 											errorMess.setError("1");
-											errorMess.setResult("服务器繁忙");
+											errorMess.setResult("网络错误，请检查您的网络");
 											//((MainActivity) object).setMessage(errorMess);
 
 										}

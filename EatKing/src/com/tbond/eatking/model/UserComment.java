@@ -105,6 +105,12 @@ public class UserComment {
 	public String GetUserAvatar() {
 		return this.userAvatar;
 	}
+
 	
+	public String getPerPoint(){
+		float sum = Float.valueOf(tastGrade) + Float.valueOf(environmentGrade) + Float.valueOf(serviceGrade);
+		String result = String.valueOf(sum / 3.0);
+		return result.substring(0, result.length() > 3? 3: result.length());
+	}
 										
 }

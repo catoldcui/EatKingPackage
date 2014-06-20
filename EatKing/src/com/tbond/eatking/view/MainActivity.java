@@ -14,6 +14,9 @@ import greendroid.widget.QuickActionWidget.OnQuickActionClickListener;
 import greendroid.widget.SegmentedBar.OnSegmentChangeListener;
 
 import com.tbond.eatking.R;
+import com.tbond.eatking.controller.Controller;
+import com.tbond.eatking.model.Shop;
+import com.tbond.eatking.model.UserComment;
 import com.tbond.eatking.net.JsonAnalysis;
 
 import android.annotation.SuppressLint;
@@ -93,7 +96,26 @@ public class MainActivity extends GDActivity {
      */
     private OnQuickActionClickListener mActionListener = new OnQuickActionClickListener() {
         public void onQuickActionClicked(QuickActionWidget widget, int position) {
-            Toast.makeText(MainActivity.this, "Item " + position + " clicked", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "Item " + position + " clicked", Toast.LENGTH_SHORT).show();
+            switch (position) {
+			case 0:
+				if(Controller.getInstance().isLogin()){
+					intent = new Intent(MainActivity.this, PersonalHomepage.class);
+					startActivity(intent);
+				} else {
+					intent = new Intent(MainActivity.this, UserLogin.class);
+					Toast.makeText(MainActivity.this, "ÇëµÇÂ¼", Toast.LENGTH_SHORT).show();
+					startActivity(intent);
+				}
+				break;
+			
+			case 1:
+				Toast.makeText(MainActivity.this, "ÊÕ²Ø", Toast.LENGTH_SHORT).show();
+				break;
+
+			default:
+				break;
+			}
         }
     };
     
@@ -117,14 +139,18 @@ public class MainActivity extends GDActivity {
 		
 			break;
 		case 2:
-			/**
-	         * Ìø×ª¾À´íÒ³
-	         */
-	        Intent intent = new Intent();
-	        intent.setClass(MainActivity.this, CorrectActivity.class);
+	        intent = new Intent();
+	        intent.setClass(MainActivity.this, PersonalHomepage.class);
 	        startActivity(intent);
+//			intent = new Intent();
+//	        intent.setClass(MainActivity.this, PaiHangBangTabActivity.class);
+//	        startActivity(intent);
 			break;
 		case 3:
+			
+	        intent = new Intent();
+	        intent.setClass(MainActivity.this, ShopInfoActivity.class);
+	        startActivity(intent);
 			break;
 
 		default:

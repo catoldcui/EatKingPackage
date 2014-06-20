@@ -24,5 +24,10 @@
     <style name="TextAppearanceLarge" parent="@style/TextAppearance.Large">
         <item name="android:textSize">18sp</item>
     </style>
+    <style name="MyRatingBar" parent="@android:style/Widget.RatingBar">  
+        <item name="android:progressDrawable">@drawable/food_rating_bar_full</item>  
+        <item name="android:minHeight">32dip</item>  
+        <item name="android:maxHeight">32dip</item>  
+    </style>  
 
 </resources>

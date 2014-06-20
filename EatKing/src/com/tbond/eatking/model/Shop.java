@@ -16,6 +16,46 @@ public class Shop {
 	public Shop() {
 
 	}
+	
+	private String environmentGrade = null;
+	private String tastGrade = null;
+	private String serviceGrade = null;
+	private String pricePerPerson = null;
+	public void setServiceGrade(String serviceGrade) {
+		this.serviceGrade = serviceGrade;
+
+	}
+	public void setEnvironmentGrade(String environmentGrade) {
+		this.environmentGrade = environmentGrade;
+
+	}
+	public void setPricePerPerson(String pricePerPerson) {
+		this.pricePerPerson = pricePerPerson;
+
+	}
+	public void setTastGrade(String tastGrade) {
+		this.tastGrade = tastGrade;
+
+	}
+	public String GetEnvironmentGrade() {
+		return this.environmentGrade;
+
+	}
+	
+	public String GetServiceGrade() {
+		return this.serviceGrade;
+
+	}
+	public String GetPricePerPerson() {
+		return this.pricePerPerson;
+
+	}
+	public String GetTastGrade() {
+		return this.tastGrade;
+
+	}
+
+	
 	public void setIsCollected(String isCollected) {
 		this.isCollected = isCollected;
 
@@ -37,7 +77,6 @@ public class Shop {
 
 	public void setLocationX(String locationX) {
 		this.locationX = locationX;
-
 	}
 
 	public void setLocationY(String locationY) {
@@ -133,5 +172,10 @@ public class Shop {
 		return shopId + shopName + userId + locationX + locationY + address
 				+ phoneNumber + businessTime + tips + state;
 	}
-
+	
+	public String getPerPoint(){
+		float sum = Float.valueOf(tastGrade) + Float.valueOf(environmentGrade) + Float.valueOf(serviceGrade);
+		String result = String.valueOf(sum / 3.0);
+		return result.substring(0, result.length() > 3? 3: result.length());
+	}
 }
